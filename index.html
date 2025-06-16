@@ -76,29 +76,27 @@
     <div id="updated"></div>
   </div>
   <script>
-    function updateStatus() {
-      fetch('/api/status')
-        .then(res => res.json())
-        .then(data => {
-          const statusEl = document.getElementById('status');
-          const updatedEl = document.getElementById('updated');
-          if (data.state === 'in') {
-            statusEl.innerText = '🟢 Henry is in the shop';
-            statusEl.style.color = '#38a169';
-          } else {
-            statusEl.innerText = '🔴 Henry is not in the shop';
-            statusEl.style.color = '#e53e3e';
-          }
-          updatedEl.innerText = 'Last updated: ' + new Date(data.updated).toLocaleTimeString();
-        })
-        .catch(() => {
-          document.getElementById('status').innerText = '⚠️ Unable to fetch status';
-          document.getElementById('status').style.color = '#d69e2e';
-          document.getElementById('updated').innerText = '';
-        });
+    async function updateStatus() {
+      const statusEl = document.getElementById('status');
+      const updatedEl = document.getElementById('updated');
+
+      try {
+        const res = await fetch('/api/status');
+        const data = await res.json();
+
+        const isIn = data.state === 'in';
+        statusEl.innerText = isIn ? '🟢 Henry is in the shop' : '🔴 Henry is not in the shop';
+        statusEl.style.color = isIn ? '#38a169' : '#e53e3e';
+        updatedEl.innerText = 'Last updated: ' + new Date(data.updated).toLocaleTimeString();
+      } catch (err) {
+        statusEl.innerText = '⚠️ Unable to fetch status';
+        statusEl.style.color = '#d69e2e';
+        updatedEl.innerText = '';
+      }
     }
-    updateStatus();
-    setInterval(updateStatus, 30000); // Refresh every 30 seconds
+
+    updateStatus(); // Run once on page load
+    setInterval(updateStatus, 5000); // Refresh every 5 seconds
   </script>
 </body>
 </html>
