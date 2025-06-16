@@ -30,6 +30,16 @@
       justify-content: center;
       transition: background 0.3s, color 0.3s;
     }
+    .mode-toggle {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-color);
+    }
     .container {
       background: var(--card-bg);
       border-radius: 16px;
@@ -70,15 +80,6 @@
       margin-left: auto;
       margin-right: auto;
     }
-    button {
-      margin-top: 16px;
-      padding: 6px 12px;
-      border: none;
-      background: #4299e1;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
-    }
     @media (max-width: 500px) {
       .container {
         padding: 24px 8px;
@@ -93,12 +94,12 @@
   </style>
 </head>
 <body>
+  <button class="mode-toggle" onclick="toggleMode()" title="Toggle Light/Dark Mode">🌓</button>
   <div class="container">
     <div class="logo" title="Barber Shop">💈</div>
     <h1>Henry’s Barber Shop Status</h1>
     <div id="status">Loading...</div>
     <div id="updated"></div>
-    <button onclick="toggleMode()">Toggle Light/Dark Mode</button>
   </div>
   <audio id="status-sound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto"></audio>
 
