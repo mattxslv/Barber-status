@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Matt's Barber Status</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 40px; }
+    #status { font-size: 2em; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Matt’s Barber Shop Status</h1>
+  <p id="status">Loading...</p>
+  <script>
+    fetch('/api/status')
+      .then(res => res.json())
+      .then(data => {
+        const statusEl = document.getElementById('status');
+        const msg = data.state === 'in'
+          ? '🟢 Matt is in the shop'
+          : '🔴 Matt is not in the shop';
+        statusEl.innerText = msg + '\n\nUpdated: ' + new Date(data.updated).toLocaleTimeString();
+      });
+  </script>
+</body>
+</html>
